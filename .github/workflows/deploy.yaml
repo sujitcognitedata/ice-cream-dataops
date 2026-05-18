@@ -57,5 +57,9 @@ jobs:
         run: yes | cdf auth verify
       - name: Build Toolkit Configurations
         run: cdf build --env=${{ matrix.environment }}
-      - name: Deploy Toolkit Configurations
+      - name: Deploy Toolkit Configurations (dry run)
+        if: matrix.environment == 'test'
+        run: cdf deploy --env=${{ matrix.environment }} --dry-run
+      - name: Deploy Toolkit Configurations (actual deploy)
+        if: matrix.environment == 'prod'
         run: cdf deploy --env=${{ matrix.environment }}
